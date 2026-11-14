@@ -1,0 +1,20 @@
+name: 'elt_pipeline'
+version: '1.0.0'
+config-version: 2
+
+# Profile name resolved from profiles.yml (kept out of the repo, see docs).
+profile: 'elt_pipeline'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  elt_pipeline:
+    +materialized: table
+    +meta:
+      owner: data-engineering

@@ -1,0 +1,27 @@
+services:
+  elt-pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dat-01-elt-pipeline:local
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      ELT_DATABASE_PATH: /data/elt.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - elt-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  elt-data:
